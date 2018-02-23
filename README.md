@@ -5,14 +5,14 @@ Place API Key inside *value* on line 803 of `postman/Fantasy Pros.postman_collec
 ## Usage  
 ### Frontend Testing
 #### Testcafe
-Testcafe allows for end to end testing for the frontend website. Tests can be written in Javascript and run without the use of Selenium. Tests can offer be ran against cloud services such as Saucelabs or BrowserStack. Almost any browser, including mobile devices, can be used for testing.  
+Testcafe allows for end to end testing for the frontend website. Tests can be written in Javascript and run without the use of Selenium. Tests can also be run against cloud services such as Saucelabs or BrowserStack. Almost any browser can be used for testing, and even mobile device emulation is supported.  
 ##### Single Test Examples  
 Chrome: `testcafe chrome tests/nfl.js`  
 Firefox: `testcafe firefox tests/nfl.js`  
 Safari: `testcafe safari tests/nfl.js `  
 3 Concurrent Browsers: `testcafe -c 3 chrome tests/nfl.js`  
 Headless Browsers: `testcafe chrome:headless tests/nfl.js`    
-Multiple Browsers:  `testcafe chrome:headless,firefox:headless tests/nfl.js`  
+Multiple Browsers: `testcafe chrome:headless,firefox:headless tests/nfl.js`  
 #### Test Runner  
 `node test.js`  
 ### API Testing  
