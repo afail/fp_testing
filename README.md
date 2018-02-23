@@ -24,7 +24,6 @@ Tests are writte and executed each time a call is ran. See `Compare Players` wit
 All (or some) of the tests may be run in batch using the Test Runner feature of Postman. Click the **Runner** button within Postman and choose the Fantasy Pros collection.  
 #### Newman
 Newman provides a CLI driven option to run Postman tests.  
-Single Test: 
 All Tests: `newman run postman/Fantasy\ Pros.postman_collection.json -e postman/FP\ Partners.postman_environment.json`  
 Single Folder: `newman run postman/Fantasy\ Pros.postman_collection.json -e postman/FP\ Partners.postman_environment.json --folder "Compare Players"
 `  
