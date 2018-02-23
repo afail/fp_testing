@@ -1,0 +1,807 @@
+{
+	"info": {
+		"name": "Fantasy Pros",
+		"_postman_id": "d8ebc72f-9f12-2790-0ae7-17b8ec40d0ae",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Compare Players",
+			"description": "",
+			"item": [
+				{
+					"name": "No API Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "52d2d190-8e5d-45c8-9796-1c50901e9571",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"No Players Set\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "week",
+								"value": "12",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/api/v1/compare-players.php",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compare-players.php"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{key}}",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "ranking_type",
+									"value": "draft",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "details",
+									"value": "all",
+									"equals": true,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Missing Players",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b519954-4452-42e5-ac63-ca2ec2d806f2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"No Players Set\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "week",
+								"value": "12",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/api/v1/compare-players.php?api_key={{key}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compare-players.php"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{key}}",
+									"equals": true
+								},
+								{
+									"key": "ranking_type",
+									"value": "draft",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "details",
+									"value": "all",
+									"equals": true,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NFL: Tom Brady vs. Aaron Rodgers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f79439f7-e33a-4776-b777-1344fb6302f1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Sport is NFL\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.sport).to.eql(\"NFL\");",
+									"});",
+									"",
+									"pm.test(\"Position is QB\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.position_id).to.eql(\"QB\");",
+									"});",
+									"",
+									"pm.test(\"Ranking Type is weekly\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.ranking_type).to.eql(\"weekly\");",
+									"});",
+									"",
+									"pm.test(\"Has Standard Scoring Rankings\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.rankings.STD.length).to.not.eql(0)",
+									"    pm.expect(jsonData.rankings.PPR.length).to.eql(0)",
+									"    pm.expect(jsonData.rankings.HALF.length).to.eql(0)",
+									"});",
+									"",
+									"pm.test(\"Correct Players\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.players[9001].player_name).to.eql(\"Aaron Rodgers\");",
+									"    pm.expect(jsonData.players[9603].player_name).to.eql(\"Tom Brady\");",
+									"});",
+									"",
+									"pm.test(\"Expert Data Exists\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.experts.length).to.not.eql(0)",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "week",
+								"value": "12",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/api/v1/compare-players.php?api_key={{key}}&details=all&players=9001:9603&position=QB",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compare-players.php"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{key}}",
+									"equals": true
+								},
+								{
+									"key": "ranking_type",
+									"value": "draft",
+									"equals": true,
+									"disabled": true
+								},
+								{
+									"key": "details",
+									"value": "all",
+									"equals": true
+								},
+								{
+									"key": "players",
+									"value": "9001:9603",
+									"equals": true
+								},
+								{
+									"key": "position",
+									"value": "QB",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NFL RB Handcuffs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-rb-handcuffs.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-rb-handcuffs.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						},
+						{
+							"key": "scoring",
+							"value": "PPR",
+							"equals": true,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Player Points",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-player-points.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-player-points.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Settings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/api/v1/settings.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"settings.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Articles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/api/v1/settings.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"settings.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Schedule",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "week",
+						"value": "12",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-schedule.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-schedule.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Player Cards",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "week",
+						"value": "12",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-player-cards.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-player-cards.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Player",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "week",
+						"value": "12",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-player.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-player.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						},
+						{
+							"key": "cards",
+							"value": "ecr",
+							"equals": true,
+							"disabled": true
+						},
+						{
+							"key": "days",
+							"value": "120",
+							"equals": true,
+							"disabled": true
+						},
+						{
+							"key": "week",
+							"value": "5",
+							"equals": true,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Feed",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "week",
+						"value": "12",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-feed.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-feed.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						},
+						{
+							"key": "player",
+							"value": "9001",
+							"equals": true,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Projections",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "week",
+						"value": "12",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-projections.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-projections.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						},
+						{
+							"key": "position",
+							"value": "WR",
+							"equals": true,
+							"disabled": true
+						},
+						{
+							"key": "scoring",
+							"value": "PPR",
+							"equals": true,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Season Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-season-stats.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-season-stats.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Stats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e320c82e-530d-4de4-a1b5-4aca98a29a2b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-stats.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-stats.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Targets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-targets.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-targets.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Matchups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-matchups.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-matchups.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NFL Points Allowed",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "week",
+						"value": "12",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/api/v1/nfl-points-allowed.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"nfl-points-allowed.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Experts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/api/v1/experts.php?api_key={{key}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"experts.php"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "{{key}}",
+							"equals": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d6b5b3df-5db8-4289-b6c5-c0dcedf0274a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bd8cc646-ef1f-4ab3-b558-06184d2b0b3a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d7fe2a3b-8555-47b4-ab40-7553dd2eea79",
+			"key": "key",
+			"value": "88c3549c9e11d737cff95818f094e353",
+			"type": "text"
+		}
+	]
+}
