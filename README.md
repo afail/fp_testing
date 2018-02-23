@@ -1,6 +1,6 @@
 # FP Testing Proof of Concept  
 ## Install
-`npm install -g testcafe newman`
+`npm install -g testcafe newman`  
 Place API Key inside *value* on line 803 of `postman/Fantasy Pros.postman_collection.json`  
 ## Usage  
 ### Frontend Testing
